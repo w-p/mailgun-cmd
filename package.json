@@ -11,17 +11,17 @@
     "url": "https://github.com/w-p/mailgun-cmd"
   },
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "bin": {
     "mailgun-cmd": "./bin/mailgun-cmd.js"
+  },
+  "devDependencies": {
+    "tape": "4.5.1"
   },
   "author": "William Palmer",
   "license": "MIT",
   "dependencies": {
     "chalk": "1.1.3",
-    "restify": "4.1.0",
-    "commander": "2.9.0"
+    "commander": "2.9.0",
+    "restler": "3.4.0"
   }
 }

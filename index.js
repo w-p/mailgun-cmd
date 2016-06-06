@@ -1,84 +1,77 @@
 
 
-var restify = require('restify');
+var rest = require('restler');
 
 
 var mailcmd = module.exports = {};
 
 (function () {
 
-    var domain = null;
-
-    var apikey = null;
-
-    var sender = null;
-
-
-    this.message = function () {
+    this.Message = function (domain, apikey, from) {
         var subject_line = null;
-        var domain_name = null;
+        var domain_name = domain;
         var receivers = null;
         var text_body = null;
         var html_body = null;
-        var api_key = null;
-        var sender = null;
-        var on_done = null;
+        var api_key = apikey;
+        var sender = from;
+        var on_done = function (status, message) {
+            console.log(status ? 'success:' : 'failed:', message);
+        };
 
-        function fn () {};
-
-        fn.on_done = function (value) {
-            if (!arguments.length) return value;
+        this.on_done = function (value) {
+            if (!value) return on_done;
             if (typeof(value) !== 'function') {
                 throw Error('The on_done handler must be a function.');
             };
             on_done = value;
-            return fn;
+            return this;
         };
 
-        fn.domain = function (value) {
-            if (!arguments.length) return domain;
-            domain = value;
-            return fn;
+        this.domain = function (value) {
+            if (!value) return domain_name;
+            domain_name = value;
+            return this;
         };
 
-        fn.apikey = function (value) {
-            if (!arguments.length) return api_key;
+        this.apikey = function (value) {
+            if (!value) return api_key;
             api_key = value;
-            return fn;
+            return this;
         };
 
-        fn.from = function (value) {
-            if (!arguments.length) return sender;
+        this.from = function (value) {
+            if (!value) return sender;
             sender = value;
-            return fn;
+            return this;
         };
 
-        fn.to = function (value) {
-            if (!arguments.length) return receivers;
+        this.to = function (value) {
+            if (!value) return receivers;
             if (!Array.isArray(value)) value = [value];
             receivers = (receivers || []).concat(value);
-            return fn;
+            return this;
         };
 
-        fn.subject = function (value) {
-            if (!arguments.length) return subject;
-            subject = value;
-            return fn;
+        this.subject = function (value) {
+            if (!value) return subject_line;
+            subject_line = value;
+            return this;
         };
 
-        fn.text = function (value) {
-            if (!arguments.length) return text_body;
+        this.text = function (value) {
+            if (!value) return text_body;
             text_body = value;
-            return fn;
+            return this;
         };
 
-        fn.html = function (value) {
-            if (!arguments.length) return html_body;
+        this.html = function (value) {
+            if (!value) return html_body;
             html_body = value;
-            return fn;
+            return this;
         };
 
-        fn.debug = function () {
+        this.debug = function () {
             console.log({
                 domain: domain_name,
                 api_key: api_key,
@@ -90,8 +83,8 @@ var mailcmd = module.exports = {};
             });
         };
 
-        fn.send = function () {
-            if (!text_body || !html_body) throw Error('A message is required.');
+        this.send = function () {
+            if (!text_body && !html_body) throw Error('A message is required.');
             if (!subject_line) throw Error('A subject line is required.');
             if (!domain_name) throw Error('A domain name is required.');
             if (!receivers) throw Error('A recipient is required.');
@@ -99,30 +92,23 @@ var mailcmd = module.exports = {};
             if (!sender) throw Error('A sender is required.');
 
             var message = {
-                from: sender,
-                to: receivers,
-                text: text_body,
-                html: html_body,
-                subject: subject_line
+                'from': sender,
+                'to': receivers,
+                'text': text_body,
+                'html': html_body,
+                'subject': subject_line
             };
-            var client = restify.createJsonClient({
-                url: `https://api.mailgun.net/v3/${ domain_name }/messages`,
-                version: '*'
-            });
-            client.basicAuth('api', api_key);
-            client.post('/', message, function (err, req, res, obj) {
-                if (on_done) on_done(res.statusCode === 200, res.message);
-            });
+            var url = `https://api.mailgun.net/v3/${ domain_name }/messages`;
+            var payload = {
+                username: 'api',
+                password: api_key,
+                data: message
+            };
+            rest.post(url, payload)
+                .on('complete', function (data, res) {
+                    if (on_done) on_done(res.statusCode == 200, data.message);
+                });
         };
-
-        return fn;
     };
-
-    return function (domain, apikey, from) {
-        domain_name = domain;
-        api_key = apikey;
-        sender = from;
-        return mailcmd;
-    }
 
 }).apply( mailcmd );
