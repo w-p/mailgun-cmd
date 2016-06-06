@@ -11,16 +11,6 @@ var warn = chalk.bold.yellow;
 var error = chalk.bold.red;
 
 
-var subject_line = null;
-var domain_name = null;
-var receivers = null;
-var text_body = null;
-var html_body = null;
-var api_key = null;
-var sender = null;
-var on_done = null;
-
-
 cmd.version('0.1.0')
     .option('-k --key [api key]', 'mailgun API key')
     .option('-d --domain [domain]', 'mailgun domain')

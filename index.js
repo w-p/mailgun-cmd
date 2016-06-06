@@ -84,9 +84,9 @@ var mailcmd = module.exports = {};
                 api_key: api_key,
                 from: sender,
                 to: receivers,
-                subject: subject_line
+                subject: subject_line,
                 text: text_body,
-                html: html_body,
+                html: html_body
             });
         };
 
