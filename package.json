@@ -1,27 +1,27 @@
 {
-    "name": "mailgun-cmd",
-    "version": "0.1.1",
-    "description": "a command-line tool for mailgun",
-    "homepage": "https://github.com/w-p/mailgun-cmd",
-    "keywords": [
-        "mailgun"
-    ],
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/w-p/mailgun-cmd"
-    },
-    "main": "index.js",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "bin": {
-        "mailgun-cmd": "./bin/mailgun-cmd.js"
-    },
-    "author": "William Palmer",
-    "license": "MIT",
-    "dependencies": {
-        "chalk": "1.1.3",
-        "restify": "4.1.0",
-        "commander": "2.9.0"
-    }
+  "name": "mailgun-cmd",
+  "version": "0.1.2",
+  "description": "a command-line tool for mailgun",
+  "homepage": "https://github.com/w-p/mailgun-cmd",
+  "keywords": [
+    "mailgun"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/w-p/mailgun-cmd"
+  },
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "mailgun-cmd": "./bin/mailgun-cmd.js"
+  },
+  "author": "William Palmer",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "1.1.3",
+    "restify": "4.1.0",
+    "commander": "2.9.0"
+  }
 }
