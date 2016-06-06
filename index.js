@@ -106,7 +106,7 @@ var mailcmd = module.exports = {};
                 subject: subject_line
             };
             var client = restify.createJsonClient({
-                url: `https://api.mailgun.net/v3/${ domain_name }/messages`;,
+                url: `https://api.mailgun.net/v3/${ domain_name }/messages`,
                 version: '*'
             });
             client.basicAuth('api', api_key);
