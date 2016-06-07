@@ -1,11 +1,14 @@
 
 
 var rest = require('restler');
+var package_json = require('./package.json');
 
 
 var mailcmd = module.exports = {};
 
 (function () {
+
+    this.version = package_json.version;
 
     this.Message = function (domain, apikey, from) {
         var subject_line = null;

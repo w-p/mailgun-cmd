@@ -11,7 +11,7 @@ var warn = chalk.bold.yellow;
 var error = chalk.bold.red;
 
 
-cmd.version('0.1.4')
+cmd.version(mailcmd.version)
     .option('-k --key [api key]', 'mailgun API key')
     .option('-d --fqdn [domain name]', 'mailgun domain')
     .option('-f --from [sender\'s address]', 'sender\'s e-mail address')
