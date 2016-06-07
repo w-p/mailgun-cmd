@@ -1,6 +1,6 @@
 {
   "name": "mailgun-cmd",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "a command-line tool for mailgun",
   "homepage": "https://github.com/w-p/mailgun-cmd",
   "keywords": [
