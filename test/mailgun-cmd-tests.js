@@ -2,36 +2,57 @@
 
 var test = require('tape');
 var mailcmd = require('..');
+var fixtures = require('./fixtures.js');
 
-
-var key = 'your-key-here';
-var domain = 'your.domain.here';
-var from = 'your@email.here';
-var to = 'your@mailing.list.here';
-
-var subject = 'a test subject';
-var text = 'a test body.';
 
 test('chained arguments', (assert) => {
     var message = new mailcmd.Message();
-    assert.ok(typeof(message) === 'object', 'Message is an object');
+    assert.ok(
+        typeof(message) === 'object',
+        'message is an object'
+    );
+
     message
-        .apikey(key)
-        .domain(domain)
-        .from(from)
-        .to(to)
-        .subject(subject)
-        .text(text);
-    message.apikey(key).domain(domain).from(from).to(to).subject(subject).text(text);
-    assert.ok(message.apikey() === key, 'api key matches');
-    assert.ok(message.domain() === domain, 'domain matches');
-    assert.ok(message.from() === from, 'from matches');
-    var _to = message.to();
-    assert.ok(Array.isArray(_to), 'to is now an array');
-    assert.ok(_to[0] === to, 'to matches');
-    assert.ok(message.subject() === subject, 'subject matches');
-    assert.ok(message.text() === text, 'text matches');
-    assert.ok(message.html() === null, 'html is null');
+        .apikey(fixtures.key)
+        .domain(fixtures.domain)
+        .from(fixtures.from)
+        .to(fixtures.to)
+        .subject(fixtures.subject)
+        .text(fixtures.text)
+        .html(fixtures.html);
+
+    assert.ok(
+        message.apikey() === fixtures.key,
+        'api key matches, unmodified'
+    );
+    assert.ok(
+        message.domain() === fixtures.domain,
+        'domain matches, unmodified'
+    );
+    assert.ok(
+        message.from() === fixtures.from,
+        'from matches, unmodified'
+    );
+    assert.ok(
+        Array.isArray(message.to()),
+        'to is modified, is an array'
+    );
+    assert.ok(
+        message.to()[0] === fixtures.to,
+        'first to matches, unmodified'
+    );
+    assert.ok(
+        message.subject() === fixtures.subject,
+        'subject matches, unmodified'
+    );
+    assert.ok(
+        message.text() === fixtures.text,
+        'text matches, unmodified'
+    );
+    assert.ok(
+        message.html() === fixtures.html,
+        'html matches, unmodified'
+    );
     message.send();
     assert.end();
 });

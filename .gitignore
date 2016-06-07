@@ -1,2 +1,4 @@
 **/node_modules
 makefile
+scratch
+test/fixtures-private.js
